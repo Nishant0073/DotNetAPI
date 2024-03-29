@@ -72,3 +72,4 @@
 /home/nishant/DotNetProject/DotNetAPI/bin/Debug/net8.0/Users.json
 /home/nishant/DotNetProject/DotNetAPI/bin/Debug/net8.0/UserSalary.json
 /home/nishant/DotNetProject/DotNetAPI/bin/Debug/net8.0/Newtonsoft.Json.dll
+/home/nishant/DotNetProject/DotNetAPI/obj/Debug/net8.0/DotNetAPI.sourcelink.json

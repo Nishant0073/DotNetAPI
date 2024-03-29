@@ -9,7 +9,7 @@ namespace DotnetAPI.Data
         private readonly IConfiguration _config;
         public DataContextDapper(IConfiguration config)
         {
-            _config  = config;
+            _config = config;
         }
 
         public IEnumerable<T> LoadData<T>(string sql)
@@ -20,6 +20,7 @@ namespace DotnetAPI.Data
 
         public T LoadDataSingle<T>(string sql)
         {
+            
             IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             return dbConnection.QuerySingle<T>(sql);
         }
@@ -35,7 +36,22 @@ namespace DotnetAPI.Data
             IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             return dbConnection.Execute(sql);
         }
+        public bool ExecuteSqlWithParameters(string sql, List<SqlParameter> sqlParameters)
+        {
+            SqlCommand sqlCommand = new SqlCommand(sql);
 
-        
-    }   
+            foreach (SqlParameter parameter in sqlParameters)
+            {
+                sqlCommand.Parameters.Add(parameter);
+            }
+            SqlConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            dbConnection.Open();
+            sqlCommand.Connection = dbConnection;
+            int rowsAffected = sqlCommand.ExecuteNonQuery();
+            dbConnection.Close();
+            return rowsAffected > 0;
+        }
+
+
+    }
 }
